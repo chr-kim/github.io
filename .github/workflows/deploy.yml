@@ -9,16 +9,16 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions: # 페이지 배포를 위한 권한 추가
-      contents: read
-      pages: write
-      id-token: write
+    permissions:
+      contents: read   # actions/checkout을 위해 레포지토리 내용을 읽을 권한
+      pages: write     # GitHub Pages에 배포할 권한
+      id-token: write  # 배포 인증을 위한 토큰 권한
     steps:
       - name: Checkout
-        uses: actions/checkout@a44c2072f861b58532f50b4a4413155737223b20 # v4 -> commit SHA
+        uses: actions/checkout@a44c2072f861b58532f50b4a4413155737223b20
       
       - name: Setup Node.js
-        uses: actions/setup-node@4648a47454fdef03163353597d2871317548b815 # v4 -> commit SHA
+        uses: actions/setup-node@4648a47454fdef03163353597d2871317548b815
         with:
           node-version: '20'
 
@@ -29,13 +29,13 @@ jobs:
         run: npm run build
 
       - name: Setup Pages
-        uses: actions/configure-pages@5a21f7c320d32e9471550c60938f310f8f17a4c7 # v4 -> commit SHA
+        uses: actions/configure-pages@5a21f7c320d32e9471550c60938f310f8f17a4c7
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@a8b2f96711b2a95c94239854de569527f4e9104d # v3 -> commit SHA
+        uses: actions/upload-pages-artifact@a8b2f96711b2a95c94239854de569527f4e9104d
         with:
           path: './dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@3464494191d4e69b5963f46f3458b87a81096b79 # v4 -> commit SHA
+        uses: actions/deploy-pages@3464494191d4e69b5963f46f3458b87a81096b79
