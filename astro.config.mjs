@@ -7,7 +7,7 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: 'https://chr-kim.github.io',
   // 리포지토리 이름이 'github.io'라면 base 설정 추가
-  base: '/', // 또는 리포지토리 이름이 username.github.io가 아니라면 '/github.io'
+  base: '/github.io', // 또는 리포지토리 이름이 username.github.io가 아니라면 '/github.io'
   output: 'static', // GitHub Pages용 정적 사이트 명시
   integrations: [mdx(), sitemap()],
   build: {
