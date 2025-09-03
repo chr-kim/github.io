@@ -1,4 +1,4 @@
-name: Deploy Astro to GitHub Pages
+name: Fast Deploy Astro to GitHub Pages
 
 on:
   push:
@@ -14,24 +14,73 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
+env:
+  NODE_ENV: production
+
 jobs:
-  build:
+  # 변경 감지 작업
+  changes:
     runs-on: ubuntu-latest
+    outputs:
+      src-changed: ${{ steps.changes.outputs.src }}
+      deps-changed: ${{ steps.changes.outputs.deps }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            src:
+              - 'src/**'
+              - 'astro.config.mjs'
+              - 'public/**'
+            deps:
+              - 'package*.json'
+  
+  # 빌드 및 배포 작업
+  build-and-deploy:
+    needs: changes
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       
+      # Node.js 설정 (built-in 캐싱)
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
       
+      # 조건부 의존성 설치
       - name: Install dependencies
+        if: needs.changes.outputs.deps-changed == 'true'
         run: npm ci
       
-      - name: Build with Astro
+      # 의존성이 변경되지 않은 경우 캐시에서 복원
+      - name: Restore cached dependencies
+        if: needs.changes.outputs.deps-changed == 'false'
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-deps-${{ hashFiles('package-lock.json') }}
+      
+      # Astro 빌드 (소스 변경된 경우만)
+      - name: Build Astro site
+        if: needs.changes.outputs.src-changed == 'true' || needs.changes.outputs.deps-changed == 'true'
         run: npm run build
+      
+      # 빌드 결과 캐시에서 복원 (소스 변경 없는 경우)
+      - name: Restore cached build
+        if: needs.changes.outputs.src-changed == 'false' && needs.changes.outputs.deps-changed == 'false'
+        uses: actions/cache@v4
+        with:
+          path: dist
+          key: ${{ runner.os }}-build-${{ hashFiles('src/**/*') }}
       
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -40,14 +89,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: './dist'
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
+      
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
