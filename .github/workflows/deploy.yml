@@ -1,41 +1,53 @@
-name: GitHub Pages Astro CI
+name: Deploy Astro to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read   # actions/checkout을 위해 레포지토리 내용을 읽을 권한
-      pages: write     # GitHub Pages에 배포할 권한
-      id-token: write  # 배포 인증을 위한 토큰 권한
     steps:
       - name: Checkout
-        uses: actions/checkout@a44c2072f861b58532f50b4a4413155737223b20
+        uses: actions/checkout@v4
       
       - name: Setup Node.js
-        uses: actions/setup-node@4648a47454fdef03163353597d2871317548b815
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
-
+          cache: 'npm'
+      
       - name: Install dependencies
-        run: npm install
-
-      - name: Build
+        run: npm ci
+      
+      - name: Build with Astro
         run: npm run build
-
+      
       - name: Setup Pages
-        uses: actions/configure-pages@5a21f7c320d32e9471550c60938f310f8f17a4c7
-
+        uses: actions/configure-pages@v5
+      
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@a8b2f96711b2a95c94239854de569527f4e9104d
+        uses: actions/upload-pages-artifact@v3
         with:
           path: './dist'
 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@3464494191d4e69b5963f46f3458b87a81096b79
+        uses: actions/deploy-pages@v4
