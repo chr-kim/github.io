@@ -1,3 +1,6 @@
-# Hello World!
-## 첫 번째 블로그 포스팅입니다.
-### 안녕하세요!
+---
+title: 'hello astro blog world'
+description: 'first blog test'
+pubDate: 'Aug 03 2025'
+---
+안녕하세요~블로그를 시작합니다!!!!

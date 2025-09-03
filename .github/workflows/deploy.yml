@@ -1,61 +1,41 @@
-# 워크플로우의 이름 정의
 name: GitHub Pages Astro CI
 
-# 언제 이 워크플로우를 실행할 것인가에 대한 규칙
 on:
-  # 'main' 브랜치에 push 이벤트가 발생했을 때 실행
   push:
     branches: [ main ]
-  # 'main' 브랜치에 대한 pull request 이벤트가 발생했을 때 실행
   pull_request:
     branches: [ main ]
 
-# 수행할 작업(Job)들의 목록
 jobs:
-  # 'build-and-deploy' 라는 이름의 작업
   build-and-deploy:
-    # 이 작업이 실행될 가상 머신의 환경 (최신 우분투)
     runs-on: ubuntu-latest
-    
-    # 작업의 세부 단계(Step)들
+    permissions: # 페이지 배포를 위한 권한 추가
+      contents: read
+      pages: write
+      id-token: write
     steps:
-      # 1. 소스 코드 체크아웃
-      # GitHub 레포지토리의 소스 코드를 가상 머신으로 가져오는 단계
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@a44c2072f861b58532f50b4a4413155737223b20 # v4 -> commit SHA
       
-      # 2. Node.js 환경 설정
-      # Astro를 빌드하기 위해 필요한 Node.js를 설치하는 단계
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@4648a47454fdef03163353597d2871317548b815 # v4 -> commit SHA
         with:
-          node-version: '20' # 사용할 Node.js 버전 지정
+          node-version: '20'
 
-      # 3. 의존성 패키지 설치
-      # Astro 프로젝트에 필요한 모든 라이브러리를 설치 (npm install)
       - name: Install dependencies
         run: npm install
 
-      # 4. Astro 프로젝트 빌드
-      # Astro 소스 코드를, 웹사이트로 배포 가능한 정적 파일(HTML, CSS)로 변환 (npm run build)
-      # 결과물은 'dist' 폴더에 생성됨
       - name: Build
         run: npm run build
 
-      # 5. GitHub Pages 설정
-      # 빌드된 결과물을 GitHub Pages에 배포할 수 있도록 준비하는 단계
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@5a21f7c320d32e9471550c60938f310f8f17a4c7 # v4 -> commit SHA
 
-      # 6. 빌드 결과물 업로드
-      # 'dist' 폴더에 있는 웹사이트 파일들을, 배포를 위해 GitHub Actions에 업로드
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@a8b2f96711b2a95c94239854de569527f4e9104d # v3 -> commit SHA
         with:
           path: './dist'
 
-      # 7. GitHub Pages에 배포
-      # 업로드된 결과물을, 실제 웹사이트 주소로 공개하는 마지막 단계
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@3464494191d4e69b5963f46f3458b87a81096b79 # v4 -> commit SHA
