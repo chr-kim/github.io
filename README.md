@@ -1,2 +1,2 @@
-# Blog Readme
-hello github blog!  
+# Chriankim's Blog 
+##   
