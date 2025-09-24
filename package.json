@@ -1,6 +1,6 @@
 {
   "name": "majestic-moon",
-  "type": "module", 
+  "type": "module",
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
@@ -13,7 +13,11 @@
     "@astrojs/mdx": "^4.3.4",
     "@astrojs/rss": "^4.0.12",
     "@astrojs/sitemap": "^3.5.1",
+    "@astrojs/solid-js": "^5.1.1",
+    "@tailwindcss/vite": "^4.1.13",
     "astro": "^5.13.5",
-    "sharp": "^0.34.2"
+    "sharp": "^0.34.2",
+    "solid-js": "^1.9.9",
+    "tailwindcss": "^4.1.13"
   }
 }
