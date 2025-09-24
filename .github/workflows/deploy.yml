@@ -1,76 +1,55 @@
-name: Deploy Astro to GitHub Pages
+name: Deploy Astro site to Pages
 
 on:
+  # main 브랜치에 푸시될 때 실행됩니다.
   push:
-    branches: [main]
+    branches: ["main"]
+
+  # Actions 탭에서 수동으로 이 워크플로우를 실행할 수 있게 합니다.
   workflow_dispatch:
 
+# 워크플로우가 페이지를 빌드하고 배포할 수 있도록 권한을 설정합니다.
 permissions:
   contents: read
   pages: write
   id-token: write
 
+# 동시 배포를 하나만 허용하고, 진행 중인 실행은 취소합니다.
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+  deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    
+    runs-on: ubuntu-latest
     steps:
-      # 1. 코드 체크아웃
       - name: Checkout
         uses: actions/checkout@v4
       
-      # 2. Node.js 설정 (내장 캐싱 활용)
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-      
-      # 3. 의존성 설치 (npm ci가 더 안정적)
+      # Bun 설치 (공식 action 사용)
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+
+      # 의존성 설치 (bun install 사용)
       - name: Install dependencies
-        run: npm ci
+        run: bun install --frozen-lockfile
       
-      # 4. 빌드 실행 (항상 실행하여 안정성 확보)
-      - name: Build Astro site
-        run: |
-          npm run build
-          echo "Build completed, checking dist folder..."
-          ls -la dist/
-        env:
-          NODE_ENV: production
+      # Astro 사이트 빌드 (bun run build 사용)
+      - name: Build with Astro
+        run: bun run build
       
-      # 5. .nojekyll 파일 생성 (GitHub Pages Jekyll 처리 방지)
-      - name: Add .nojekyll file
-        run: touch dist/.nojekyll
-      
-      # 6. 빌드 결과 확인
-      - name: Verify build output
-        run: |
-          if [ ! -d "dist" ]; then
-            echo "Error: dist directory not found"
-            exit 1
-          fi
-          echo "dist directory contents:"
-          find dist -type f | head -10
-      
-      # 7. GitHub Pages 설정
       - name: Setup Pages
         uses: actions/configure-pages@v5
       
-      # 8. 아티팩트 업로드
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          # dist 폴더에서 아티팩트를 업로드합니다.
+          path: ./dist
       
-      # 9. GitHub Pages 배포
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

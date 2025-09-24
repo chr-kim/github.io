@@ -1,5 +1,6 @@
 ---
 // src/pages/blog/index.astro
+import Counter from '../components/Counter.jsx';
 ---
 
 <html lang="ko">
@@ -18,6 +19,7 @@
   <main>
     <h1>Blog 페이지</h1>
     <p>여기는 Blog 페이지입니다.</p>
+    <Counter client:load />
   </main>
 </body>
 </html>
