@@ -1,0 +1,12 @@
+/* One Dark Pro 코드블록 하이라이트 */
+[data-codetheme="onedark"] code,
+[data-codetheme="onedark"] pre {
+  background: #282c34;
+  color: #abb2bf;
+}
+[data-codetheme="onedark"] .token.comment { color: #5c6370; }
+[data-codetheme="onedark"] .token.string { color: #98c379; }
+[data-codetheme="onedark"] .token.number { color: #d19a66; }
+[data-codetheme="onedark"] .token.keyword { color: #c678dd; }
+[data-codetheme="onedark"] .token.function { color: #61afef; }
+/* ... 필요한 token 스타일 더 추가 */

@@ -16,8 +16,12 @@
     "@astrojs/solid-js": "^5.1.1",
     "@tailwindcss/vite": "^4.1.13",
     "astro": "^5.13.5",
+    "elysia": "^1.4.9",
     "sharp": "^0.34.2",
     "solid-js": "^1.9.9",
     "tailwindcss": "^4.1.13"
+  },
+  "devDependencies": {
+    "@astrojs/tailwind": "^6.0.2"
   }
 }

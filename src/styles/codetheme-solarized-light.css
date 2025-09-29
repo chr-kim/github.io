@@ -1,0 +1,8 @@
+[data-codetheme="solarized-light"] code,
+[data-codetheme="solarized-light"] pre {
+  background: #fdf6e3;
+  color: #657b83;
+}
+[data-codetheme="solarized-light"] .token.keyword { color: #859900; }
+[data-codetheme="solarized-light"] .token.string { color: #2aa198; }
+/* ... */

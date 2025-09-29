@@ -1,0 +1,11 @@
+/* GitHub 코드블록 스타일 (라이트 기준) */
+[data-codetheme="github"] code,
+[data-codetheme="github"] pre {
+  background: #f6f8fa;
+  color: #24292f;
+}
+[data-codetheme="github"] .token.comment { color: #6a737d; }
+[data-codetheme="github"] .token.string { color: #032f62; }
+[data-codetheme="github"] .token.function { color: #005cc5; }
+[data-codetheme="github"] .token.keyword { color: #d73a49; }
+/* ... */

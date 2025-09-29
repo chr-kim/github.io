@@ -1,0 +1,12 @@
+---
+import { useTheme } from "./ThemeProvider";
+const themeCtx = useTheme();
+if (!themeCtx) throw new Error("ThemeProvider가 필요합니다!");
+const { codeTheme } = themeCtx;
+const content = Astro.props.content;
+---
+<div data-codetheme={codeTheme()}>
+  <Markdown>
+    {content}
+  </Markdown>
+</div>

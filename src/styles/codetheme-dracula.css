@@ -1,0 +1,11 @@
+/* Dracula 공식 코드블록 하이라이트 */
+[data-codetheme="dracula"] code,
+[data-codetheme="dracula"] pre {
+  background: #282a36;
+  color: #f8f8f2;
+}
+[data-codetheme="dracula"] .token.comment { color: #6272a4; }
+[data-codetheme="dracula"] .token.string { color: #f1fa8c; }
+[data-codetheme="dracula"] .token.function { color: #50fa7b; }
+[data-codetheme="dracula"] .token.keyword { color: #ff79c6; }
+/* ... */

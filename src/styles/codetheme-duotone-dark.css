@@ -1,0 +1,8 @@
+[data-codetheme="duotone-dark"] code,
+[data-codetheme="duotone-dark"] pre {
+  background: #2a2734;
+  color: #b6b1e2;
+}
+[data-codetheme="duotone-dark"] .token.keyword { color: #ff7edb; }
+[data-codetheme="duotone-dark"] .token.string { color: #f8c555; }
+/* ... */
