@@ -10,16 +10,16 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.3.4",
+    "@astrojs/mdx": "^4.3.6",
     "@astrojs/rss": "^4.0.12",
-    "@astrojs/sitemap": "^3.5.1",
+    "@astrojs/sitemap": "^3.6.0",
     "@astrojs/solid-js": "^5.1.1",
     "@tailwindcss/vite": "^4.1.13",
-    "astro": "^5.13.5",
+    "astro": "^5.14.1",
     "elysia": "^1.4.9",
     "lottie-web": "^5.13.0",
     "mermaid": "^11.12.0",
-    "sharp": "^0.34.2",
+    "sharp": "^0.34.4",
     "solid-js": "^1.9.9",
     "tailwindcss": "^4.1.13"
   },
