@@ -12,7 +12,7 @@ export type CodeThemeType =
   | "duotone-dark";
 
 type ThemeProviderProps = {
-  children: JSX.Element | JSX.Element[];
+  children?: JSX.Element | JSX.Element[];
 };
 
 const ThemeContext = createContext<{

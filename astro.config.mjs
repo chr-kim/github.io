@@ -12,7 +12,7 @@ export default defineConfig({
 
   // 또는 리포지토리 이름이 username.github.io가 아니라면 '/github.io'
   base: '/github.io',
-
+  // base: process.env.NODE_ENV === 'production' ? '/github.io' : '/',
   // GitHub Pages용 정적 사이트 명시
   output: 'static',
 

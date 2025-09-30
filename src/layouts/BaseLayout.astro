@@ -1,0 +1,45 @@
+---
+// src/layouts/BaseLayout.astro
+
+// --- 1. 필요한 컴포넌트와 변수 가져오기 ---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { ThemeProvider } from '../components/ThemeProvider.tsx'; // 다크/라이트 모드 관리
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+// --- 2. 페이지별로 다른 값을 받을 수 있도록 Props 정의 ---
+// 이 레이아웃을 사용하는 다른 페이지(index.astro 등)에서 title과 description을 전달해줄 수 있습니다.
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+// 전달받은 값이 없으면 기본값을 사용합니다.
+const { 
+  title = SITE_TITLE, 
+  description = SITE_DESCRIPTION 
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+    <ThemeProvider client:load />
+
+		<Header />
+
+		<main class="max-w-4xl mx-auto px-6 py-12">
+			<slot />
+		</main>
+
+		<Footer />
+	</body>
+</html>

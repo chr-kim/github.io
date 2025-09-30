@@ -1,0 +1,25 @@
+---
+// src/pages/blog/index.astro
+import Counter from '../components/Counter.jsx';
+---
+
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chriankim's Blog -Vade Mecum-</title>
+</head>
+<body>
+  <nav>
+    <a href="/github.io/">Home</a>
+    <a href="/github.io/about/">About</a>
+    <a href="/github.io/blog/">Blog</a>
+  </nav>
+  
+  <main>
+    <h1>Blog 페이지</h1>
+    <p>여기는 Blog 페이지입니다.</p>
+    <Counter client:load />
+  </main>
+</body>
+</html>

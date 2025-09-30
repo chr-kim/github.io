@@ -25,19 +25,19 @@
 /* Lexend(영문), Pretendard(한글), D2Coding(코드) 폰트 self-host 예시 */
 @font-face {
   font-family: 'Lexend';
-  src: url('/fonts/Lexend-Light.woff2') format('woff2');
+  src: url('/github.io/fonts/Lexend-Light.woff2') format('woff2');
   font-display: swap;
   unicode-range: U+0020-007F;
 }
 @font-face {
   font-family: 'Pretendard';
-  src: url('/fonts/Pretendard-Medium.woff2') format('woff2');
+  src: url('/github.io/fonts/Pretendard-Medium.woff2') format('woff2');
   font-display: swap;
   unicode-range: U+AC00-D7A3, U+3130-318F, U+1100-11FF;
 }
 @font-face {
   font-family: 'D2Coding';
-  src: url('/fonts/D2Coding.woff2') format('woff2');
+  src: url('/github.io/fonts/D2Coding.woff2') format('woff2');
   font-display: swap;
 }
 
